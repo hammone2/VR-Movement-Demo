@@ -42,8 +42,9 @@ public class Hook : MonoBehaviour
     {
         transform.SetParent(null);
         isActive = true;
-        //rb.isKinematic = false;
+        rb.isKinematic = false;
         rb.useGravity = true;
+        rb.AddForce(muzzle.forward * 13f, ForceMode.Impulse);
         this.controller = controller;
     }
 
@@ -56,7 +57,7 @@ public class Hook : MonoBehaviour
         transform.localPosition = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        //rb.isKinematic = true;
+        rb.isKinematic = true;
         rb.useGravity = false;
     }
 

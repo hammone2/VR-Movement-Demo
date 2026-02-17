@@ -3,24 +3,34 @@ using UnityEngine;
 public class GrappleGun : MonoBehaviour
 {
     public GameObject hook;
-    public Transform muzzle;
+    public GameObject muzzle;
+    public LineRenderer line;
     public GrappleController controller;
 
-    private bool isShot = false;
+    private void Start()
+    {
+        line.positionCount = 2;
+    }
+
+    private void Update()
+    {
+        line.SetPosition(0,muzzle.transform.position);
+        line.SetPosition(1, hook.transform.position);
+    }
 
     public void Shoot()
     {
-        if (!isShot)
+        Hook hookScript = hook.GetComponent<Hook>();
+
+        if (!hookScript.isActive)
         {
-            Rigidbody rb = hook.GetComponent<Rigidbody>();
-            rb.AddForce(muzzle.forward * 13f, ForceMode.Impulse);
-            hook.GetComponent<Hook>().Shoot(controller);
-            isShot = true;
+            hookScript.Shoot(controller);
         }
         else
         {
-            hook.GetComponent<Hook>().Retract();
-            isShot = false;
+            hookScript.Retract();
         }
     }
+
+
 }
